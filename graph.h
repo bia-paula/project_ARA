@@ -2,30 +2,25 @@
 #define _GRAPHH_
 
 typedef struct node{
-    int head;
     struct edge *adjList;
-    struct node *next;
 } Node;
 
 typedef struct edge{
     int tail;
     int rel;
-    struct edge *next;
-    
+    struct edge *next;   
 } Edge;
 
 typedef struct graph{
-    int n;
     Node *nodes;
-    
+    int n;
 } Graph;
 
-Node* createNode(int v);
+void createNode(Node *newNode);
 Edge* createEdge(int v, int rel);
 Graph* createGraph();
-void insertNode(Graph *g, Node *newNode);
 void insertEdge(Graph *g, int head, Edge *e);
-int nodeBelongsInGraph(Graph *g, int v);
-void printGraph(Graph *g);
+int nodeBelongsInGraph(Graph g, int head);
+void printGraph(Graph g);
 
 #endif

@@ -22,6 +22,7 @@ int main( int argc, char *argv[] ) {
 
     int line[3], i = 0;
 
+    //Maximum number of nodes is 
     Graph *g = createGraph();
 
     //Read Line
@@ -39,12 +40,6 @@ int main( int argc, char *argv[] ) {
             i++;
         }
 
-        //Checks if node is not in Graph
-        if (!nodeBelongsInGraph(g, line[0])){
-            //Create and Insert Node
-            insertNode(g, createNode(line[0]));
-        }
-
         //Create and Insert Edge
         insertEdge(g, line[0], createEdge(line[1], line[2]));
 
@@ -52,7 +47,7 @@ int main( int argc, char *argv[] ) {
     }
     fclose(fp);
 
-    printGraph(g);
+    printGraph(*g);
 
 
 }
