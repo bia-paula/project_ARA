@@ -1,12 +1,15 @@
 #include "graph.h"
+#include "bgp.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-int MAX_N = 65535; //maximum number of nodes in an internet
+
 
 //Creates a new Node v
-void createNode(Node *newNode) {
+void createNode(Node *newNode, int head) {
+    newNode->head = head;
     newNode->adjList = NULL;
+    newNode->routeList = NULL;
 }
 
 //Creates an Edge with tail v
@@ -15,6 +18,7 @@ Edge* createEdge(int tail, int rel){
     newEdge->tail = tail;
     newEdge->rel = rel;
     newEdge->next = NULL;
+    newEdge->prev_t = 0;
     return newEdge;
 }
 
@@ -26,7 +30,7 @@ Graph* createGraph() {
 
     //Initialize nodes
     for (int i=0; i<MAX_N; i++)
-        createNode(&(g->nodes[i]));
+        createNode(&(g->nodes[i]), i);
 
     return g;
 }
@@ -41,7 +45,7 @@ void insertEdge(Graph *g, int head, Edge *tail){
     }
     
     //Checks if node was already in graph
-    if(!nodeBelongsInGraph(*g, head))
+    if(!nodeBelongsInGraph(g, head))
         g->n++; //updates number of nodes
 
     //Insert at beggining
@@ -50,24 +54,24 @@ void insertEdge(Graph *g, int head, Edge *tail){
 }
 
 //Checks if Node v is already in Graph g
-int nodeBelongsInGraph(Graph g, int head){
+int nodeBelongsInGraph(Graph *g, int head){
     
-    if(g.nodes[head].adjList == NULL)
+    if(g->nodes[head].adjList == NULL)
         return 0;
     else
         return 1;
 
 }
 
-void printGraph(Graph g){
+void printGraph(Graph *g){
     Edge *e;
 
-    printf("#Nodes: %d\n", g.n);
+    printf("#Nodes: %d\n", g->n);
 
     for(int i=0; i<MAX_N; i++){
         if(nodeBelongsInGraph(g,i)) 
             printf("\nHead: %d\n", i);
-            e = g.nodes[i].adjList;
+            e = g->nodes[i].adjList;
 
             while(e != NULL){
                 printf("\t Tail: %d Rel: %d\n", e->tail, e->rel);

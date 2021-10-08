@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "graph.h"
+#include "bgp.h"
 
 int main( int argc, char *argv[] ) {
 
@@ -47,7 +48,25 @@ int main( int argc, char *argv[] ) {
     }
     fclose(fp);
 
-    printGraph(*g);
+    printGraph(g);
+    Event *calendar = NULL;
+
+    //Iterate over nodes announcing as destinations
+    for(int i=0; i<MAX_N; i++){
+        if(nodeBelongsInGraph(g,i)){
+            advertiseDestination(&(g->nodes[i]), &calendar);
+        }
+
+        //Handle events until calendar empty
+        while(calendar != NULL){
+            handleEvent(g, calendar);
+            removeEvent(&calendar);
+        }
+    }
+
+    printCalendar(calendar);
+
+
 
 
 }
