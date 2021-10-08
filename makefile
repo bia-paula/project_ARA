@@ -2,13 +2,16 @@ CC = gcc
 
 CFLAGS = -g -Wall
 
-main:  main.o graph.o
+main:  main.o bgp.o graph.o
 	$(CC) $(CFLAGS) $^ -o $@ 
 
 main.o: graph.h 
 	$(CC) $(CFLAGS) -c main.c
 
-graph.o: graph.c graph.h
+bgp.o: bgp.c graph.h bgp.h 
+	$(CC) $(CFLAGS) -c bgp.c
+
+graph.o: graph.c graph.h 
 	$(CC) $(CFLAGS) -c graph.c
 
 clean:
