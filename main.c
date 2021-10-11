@@ -56,13 +56,14 @@ int main( int argc, char *argv[] ) {
         if(nodeBelongsInGraph(g,i)){
             advertiseDestination(&(g->nodes[i]), &calendar);
         }
-
-        //Handle events until calendar empty
-        while(calendar != NULL){
-            handleEvent(g, calendar);
-            removeEvent(&calendar);
-        }
     }
+    
+    //Handle events until calendar empty
+    while(calendar != NULL){
+        handleEvent(g, calendar);
+        removeEvent(&calendar);
+    }
+
 
     printCalendar(calendar);
 
