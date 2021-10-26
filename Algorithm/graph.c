@@ -35,6 +35,26 @@ Graph* createGraph() {
     return g;
 }
 
+void freeGraph(Graph *g){
+    Edge *aux;
+    //Iterate over nodes to free Edges
+
+    for(int i=0; i<MAX_N; i++){ 
+        aux = g->nodes[i].adjList;
+
+        //Iterate over Edges
+        while(aux != NULL){
+            g->nodes[i].adjList = aux->next;
+            free(aux);
+            aux = g->nodes[i].adjList;
+        }
+    }
+
+    //free Nodes
+    free(g->nodes);
+    free(g);
+}
+
 //Inserts Edge tail to Node head
 void insertEdge(Graph *g, int tail, Edge *head){
     Node *aux = &(g->nodes[tail]);
@@ -79,5 +99,4 @@ void printGraph(Graph *g){
             }
 
     }
-
 }

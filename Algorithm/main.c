@@ -70,4 +70,8 @@ int main( int argc, char *argv[] ) {
         printf("Type %d: %d\n", i+1, type_cnt[i]); 
     for(int i=0; i<g->n; i++)
         printf("Len %d: %d\n", i, len_cnt[i]); 
+
+    free(len_cnt);
+    freeGraph(g);
+    
 }

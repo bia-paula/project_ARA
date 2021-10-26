@@ -19,6 +19,7 @@ typedef struct heap{
 } Heap;
 
 Heap * createHeap();
+void freeHeap(Heap *heap);
 int parentHeap(int id);
 int leftSonHeap(int i);
 int rightSonHeap(int i);

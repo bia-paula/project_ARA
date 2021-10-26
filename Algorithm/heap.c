@@ -54,7 +54,12 @@ Heap * createHeap(){
     new->pos = (int*)malloc(MAX_N * sizeof(int));
 
     return new;
+}
 
+void freeHeap(Heap *heap){
+    free(heap->h_arr);
+    free(heap->pos);
+    free(heap);
 }
 
 int parentHeap(int id){

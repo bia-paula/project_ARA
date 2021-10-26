@@ -33,5 +33,6 @@ Graph* createGraph();
 void insertEdge(Graph *g, int head, Edge *e);
 int nodeBelongsInGraph(Graph *g, int head);
 void printGraph(Graph *g);
+void freeGraph(Graph *g);
 
 #endif
