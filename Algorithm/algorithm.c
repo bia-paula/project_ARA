@@ -27,27 +27,16 @@ void reverseDijkstra(Graph *g, int t, int *type_cnt, int *len_cnt){
         insertHeap(heap, i, attributes);
     }
 
-    printHeap(heap,attributes);
-
     changeValueAttr(heap, t, 1, 0, attributes);
 
     while(heap->size > 0){
-        printf("\nCurrent heap\n");
-        printHeap(heap, attributes);
         v = g->nodes[getMinHeap(heap, attributes)];
         u = v.adjList;
-        printf("AFTER REMOVING HEAD\n");
-        printHeap(heap, attributes);
-
-        printf("Extending node %d with att [%d,%d]\n", v.tail, attributes[v.tail][0], attributes[v.tail][1]);
-        
 
         //Update counters with best path found to v
         type_cnt[attributes[v.tail][0]-1]++;
-        len_cnt[attributes[v.tail][1]]++;
-
-        if(attributes[v.tail][1] == 0)
-            printf("Node %d has len 0 to %d\n", v.tail, t);
+        if (attributes[v.tail][0] != 4)
+            len_cnt[attributes[v.tail][1]]++;
 
         //u is in neighbor of v
         while(u != NULL){
@@ -59,14 +48,16 @@ void reverseDijkstra(Graph *g, int t, int *type_cnt, int *len_cnt){
             if (compareAttributes(attributes[u->head], new_est)){
                 changeValueAttr(heap, u->head, new_est[0], new_est[1], attributes);
                 child[u->head] = v.tail;
-                printf("AFTER CHANEG----------\n");
-                printHeap(heap, attributes);
             }
             u = u->next;
         }
     }
 
     printPaths(t, child, g);
+    free(attributes);
+    free(child);
+    free(aux);
+    freeHeap(heap);
 }
 
 void printPaths(int t, int *tree, Graph *g){
@@ -76,12 +67,6 @@ void printPaths(int t, int *tree, Graph *g){
             printf("%d -> %d\n", i, tree[i]);
     }
 }
-
-
-
-
-
-
 
 void insertQueue(Qnode **Q, int i, int attributes[2]){
     
